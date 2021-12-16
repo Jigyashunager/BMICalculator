@@ -1,19 +1,25 @@
 
-var createlist = document.getElementsByClassName("todos")[0];
-var buttonclick = document.getElementsByTagName("button")[0];
-var input = document.getElementsByTagName("input")[0];
-var count = 0;
-buttonclick.addEventListener("click", () => {
-    var t = input.value;
-    var p = document.createElement("p");
-    p.setAttribute("key", count);
-    p.textContent = t;
-    p.addEventListener("click", function() {deleteEle(this)}, false)
-    createlist.appendChild(p);
-    count += 1;
+var comp=document.querySelector("#completed");
+var incomp=document.querySelector("#pending");
+fetch('https://jsonplaceholder.typicode.com/todos')
+  .then(response => response.json())
+  .then(data => {
+    for (var i=0;i<data.length;i++)
+    {
+        if(data[i].completed===true)
+        {
+            var para=document.createElement("li");
+            para.innerText=data[i].title
+            comp.appendChild(para);
 
-})
-function deleteEle(elem) {
-    var element = elem;
-    element.remove();
-}
+        }
+        else
+        {
+            var para=document.createElement("li");
+            para.innerText=data[i].title
+            incomp.appendChild(para);
+        
+        }
+        
+    }
+  });
